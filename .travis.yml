@@ -7,7 +7,6 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - 7
   - hhvm
 
 mysql:
@@ -18,7 +17,6 @@ mysql:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7
     - php: hhvm
 
 install:
@@ -35,8 +33,10 @@ install:
   - git clone --branch 7.x --depth 1 http://git.drupal.org/project/drupal.git drupal
   - cd drupal
 
-   # Disable sendmail
-  - echo sendmail_path=`which true` >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  # Disable sendmail (PHP)
+  - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; then echo sendmail_path=`which true` >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+  # Disable sendmail (HHVM)
+  - if [[ "$TRAVIS_PHP_VERSION" = "hhv*" ]]; then echo sendmail_path=`which true` >> /etc/hhvm/php.ini; fi
 
   # Increase the MySQL connection timeout on the PHP end.
   - echo "mysql.connect_timeout=3000" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
