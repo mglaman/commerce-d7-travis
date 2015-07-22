@@ -897,7 +897,11 @@ function _commerce_product_match_products_standard($instance, $string = '', $mat
     $pids = array_keys($entities['commerce_product']);
 
     // EntityFieldQuery doesn't return sku and title, so we have to load again.
-    $products = commerce_product_load_multiple($pids);
+    unset($entities);
+    $query = db_select('commerce_product', 'cp')
+      ->fields('cp', array('product_id', 'sku', 'title', 'type'))
+      ->condition('product_id', $pids, 'IN');
+    $products = $query->execute();
     foreach ($products AS $product) {
       $matches[$product->product_id] = array(
         'sku' => $product->sku,
