@@ -19,6 +19,7 @@ abstract class CommerceCartTestCase extends CommerceBaseTestCase {
   protected function setUpHelper($set = 'all', array $other_modules = array()) {
     $modules = parent::setUpHelper($set, $other_modules);
     parent::setUp($modules);
+    $this->modulesUp($modules);
 
     $this->store_admin = $this->createStoreAdmin();
     $this->store_customer = $this->createStoreCustomer();

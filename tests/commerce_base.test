@@ -35,16 +35,14 @@ abstract class CommerceBaseTestCase extends DrupalWebTestCase {
       'entity_token',
       'rules',
       'addressfield',
-      //'rules_admin',
-      // UI
       'ctools',
       'views',
-      //'views_ui',
       'field',
       'field_ui',
       'field_sql_storage',
       'text',
-      'list'
+      'list',
+      'options',
     );
     $api = array(
       'commerce',
@@ -69,16 +67,15 @@ abstract class CommerceBaseTestCase extends DrupalWebTestCase {
       'commerce_payment_ui',
       'commerce_product_pricing_ui',
       'commerce_tax_ui',
-      //'rules_admin',
     );
     $payment = array(
       'commerce_payment_example',
     );
 
-    // Final module list
+    // Final module list.
     $modules = array();
 
-    // Cascade down the list and add sets
+    // Cascade down the list and add sets.
     switch ($set) {
       case 'all':
         $modules = array_merge($payment, $modules);
@@ -91,7 +88,7 @@ abstract class CommerceBaseTestCase extends DrupalWebTestCase {
         break;
     }
 
-    // Bring in modules specified by caller
+    // Bring in modules specified by caller.
     $modules = array_merge($modules, $other_modules);
 
     return $modules;
